@@ -6,13 +6,13 @@ import {
 } from "@/components/campaign/CampaignShell";
 
 export async function generateMetadata() {
-  const campaign = getCampaign("pt-BR", "home");
+  const campaign = getCampaign("en", "home");
   if (!campaign) return {};
   return buildCampaignMetadata(campaign, "/");
 }
 
-export default function HomePage() {
-  const campaign = getCampaign("pt-BR", "home");
+export default function EnglishHomePage() {
+  const campaign = getCampaign("en", "home");
   if (!campaign) notFound();
   return <CampaignShell campaign={campaign} path="/" />;
 }

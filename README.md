@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kyvora Campaigns
 
-## Getting Started
+Plataforma independente de landing pages de aquisição do Kyvora.
 
-First, run the development server:
+- **Domínio:** `https://lp.kyvoraapp.com.br`
+- **CTA destino:** `https://app.kyvoraapp.com.br`
+- **Stack:** Next.js 15 · TypeScript · Tailwind CSS 4 · Framer Motion · Zod
+
+## Desenvolvimento
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Qualidade
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run qa          # typecheck + lint + unit + build
+npm run test        # vitest
+npm run test:e2e    # playwright (requer build prévio: npm run build)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Campanhas
 
-## Learn More
+Configs tipadas em `src/campaigns/`. A home existe em `pt-BR`, `en` e `es`.
 
-To learn more about Next.js, take a look at the following resources:
+Variante de hero A/B via query: `/?v=A|B|C`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy (Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Importar o repo `kyvora-campaigns`
+2. Framework preset: Next.js
+3. Configurar variáveis de `.env.example`
+4. Apontar DNS `lp.kyvoraapp.com.br` para o projeto
 
-## Deploy on Vercel
+Não altera `kyvora-site` nem o SaaS.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Documentação
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `docs/DIRECTION.md` — direção técnica/visual final
+- `docs/PROPOSTA-TECNICA-KYVORA-CAMPAIGNS.md` — proposta inicial
+- `docs/DELIVERY-REPORT.md` — relatório de entrega
