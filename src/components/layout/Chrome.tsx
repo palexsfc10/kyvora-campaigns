@@ -73,6 +73,9 @@ export function SiteHeader({
   }, [menuOpen]);
 
   const navItems = [
+    ...(campaign.product.video
+      ? [{ href: "#demonstracao", label: campaign.product.video.eyebrow }]
+      : []),
     { href: "#produto", label: labels.navProduct },
     { href: "#beneficios", label: labels.navBenefits },
     { href: "#como-funciona", label: labels.navHow },

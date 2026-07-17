@@ -41,7 +41,7 @@ export const homePtBR: CampaignConfig = {
   secondaryCta: {
     label: "Ver como funciona",
     intent: "scroll",
-    scrollTarget: "#produto",
+    scrollTarget: "#demonstracao",
   },
   trustPills: ["7 dias grátis", "Jogadores confirmam sem conta", "No celular"],
   identification: {
@@ -72,7 +72,14 @@ export const homePtBR: CampaignConfig = {
     eyebrow: "O produto",
     title: "Telas reais da plataforma.",
     description:
-      "Do Match Center à convocação pública: o que você vê aqui é o Kyvora em uso.",
+      "Escalação, rankings e timeline da partida — o que você vê aqui é o Kyvora em uso.",
+    video: {
+      eyebrow: "Demonstração",
+      src: "/videos/mobile-demo.mp4",
+      poster: "/screenshots/n1-public-confirm.png",
+      title: "Kyvora no celular",
+      description: "Fluxo real de convocação e confirmação no mobile.",
+    },
   },
   benefits: {
     eyebrow: "O que o Kyvora resolve",
@@ -144,42 +151,52 @@ export const homePtBR: CampaignConfig = {
     {
       key: "match-center",
       media: {
-        src: "/screenshots/s2-match-center.png",
-        alt: "Match Center do Kyvora com placar e eventos da partida",
-        width: 1200,
-        height: 800,
+        src: "/screenshots/n2-match-convocation.png",
+        alt: "Central da partida e convocação com confirmações e pendências",
+        width: 1024,
+        height: 622,
       },
-      caption: "Acompanhe a partida com clareza",
-    },
-    {
-      key: "convocation",
-      media: {
-        src: "/screenshots/s3-convocation.png",
-        alt: "Tela de convocação com status de presença",
-        width: 1200,
-        height: 800,
-      },
-      caption: "Convocação com status por jogador",
+      caption: "Convocação com status claro por jogador",
     },
     {
       key: "public-convocation",
       media: {
-        src: "/screenshots/s4-public-convocation.png",
-        alt: "Confirmação pública de presença sem cadastro",
-        width: 800,
-        height: 1600,
+        src: "/screenshots/n1-public-confirm.png",
+        alt: "Tela pública para o jogador confirmar presença sem criar conta",
+        width: 850,
+        height: 562,
       },
       caption: "Jogador confirma sem criar conta",
     },
     {
       key: "rankings",
       media: {
-        src: "/screenshots/s5-rankings.png",
-        alt: "Rankings e estatísticas do time",
-        width: 1200,
-        height: 800,
+        src: "/screenshots/n3-rankings.png",
+        alt: "Rankings de artilharia, assistências, fair play e presença",
+        width: 1024,
+        height: 703,
       },
-      caption: "Rankings sem planilha manual",
+      caption: "Rankings automáticos por temporada",
+    },
+    {
+      key: "lineup",
+      media: {
+        src: "/screenshots/n4-lineup.png",
+        alt: "Montagem de escalação com titulares, reservas, capitão e goleiro",
+        width: 1024,
+        height: 576,
+      },
+      caption: "Escalação com titulares e reservas",
+    },
+    {
+      key: "timeline",
+      media: {
+        src: "/screenshots/n5-timeline.png",
+        alt: "Timeline da partida com gols, assistências e cartões",
+        width: 1024,
+        height: 487,
+      },
+      caption: "Gols, assistências e cartões na partida",
     },
   ],
   offer: {

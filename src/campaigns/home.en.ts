@@ -37,7 +37,7 @@ export const homeEn: CampaignConfig = {
   secondaryCta: {
     label: "See how it works",
     intent: "scroll",
-    scrollTarget: "#produto",
+    scrollTarget: "#demonstracao",
   },
   trustPills: ["7-day free trial", "Players confirm without an account", "Mobile-ready"],
   identification: {
@@ -68,7 +68,14 @@ export const homeEn: CampaignConfig = {
     eyebrow: "The product",
     title: "Real screens from the platform.",
     description:
-      "From Match Center to the public call-up: what you see here is Kyvora in use.",
+      "Lineups, rankings, and match timeline — what you see here is Kyvora in use.",
+    video: {
+      eyebrow: "Demo",
+      src: "/videos/mobile-demo.mp4",
+      poster: "/screenshots/n1-public-confirm.png",
+      title: "Kyvora on mobile",
+      description: "Real call-up and confirmation flow on mobile.",
+    },
   },
   benefits: {
     eyebrow: "What Kyvora solves",
@@ -140,42 +147,52 @@ export const homeEn: CampaignConfig = {
     {
       key: "match-center",
       media: {
-        src: "/screenshots/s2-match-center.png",
-        alt: "Kyvora Match Center with score and match events",
-        width: 1200,
-        height: 800,
+        src: "/screenshots/n2-match-convocation.png",
+        alt: "Match Center and call-up with confirmed and pending players",
+        width: 1024,
+        height: 622,
       },
-      caption: "Follow the match with clarity",
-    },
-    {
-      key: "convocation",
-      media: {
-        src: "/screenshots/s3-convocation.png",
-        alt: "Call-up screen with attendance status",
-        width: 1200,
-        height: 800,
-      },
-      caption: "Call-ups with per-player status",
+      caption: "Call-ups with clear per-player status",
     },
     {
       key: "public-convocation",
       media: {
-        src: "/screenshots/s4-public-convocation.png",
-        alt: "Public attendance confirmation without signup",
-        width: 800,
-        height: 1600,
+        src: "/screenshots/n1-public-confirm.png",
+        alt: "Public screen for players to confirm attendance without an account",
+        width: 850,
+        height: 562,
       },
       caption: "Players confirm without an account",
     },
     {
       key: "rankings",
       media: {
-        src: "/screenshots/s5-rankings.png",
-        alt: "Team rankings and stats",
-        width: 1200,
-        height: 800,
+        src: "/screenshots/n3-rankings.png",
+        alt: "Rankings for goals, assists, fair play, and attendance",
+        width: 1024,
+        height: 703,
       },
-      caption: "Rankings without manual spreadsheets",
+      caption: "Automatic rankings by season",
+    },
+    {
+      key: "lineup",
+      media: {
+        src: "/screenshots/n4-lineup.png",
+        alt: "Lineup builder with starters, reserves, captain, and goalkeeper",
+        width: 1024,
+        height: 576,
+      },
+      caption: "Lineups with starters and reserves",
+    },
+    {
+      key: "timeline",
+      media: {
+        src: "/screenshots/n5-timeline.png",
+        alt: "Match timeline with goals, assists, and cards",
+        width: 1024,
+        height: 487,
+      },
+      caption: "Goals, assists, and cards in the match",
     },
   ],
   offer: {

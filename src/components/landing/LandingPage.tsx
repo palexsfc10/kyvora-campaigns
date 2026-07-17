@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import type { CampaignConfig } from "@/campaigns/schema";
 import { Container, Section } from "@/components/ui/Section";
-import { PhoneMockup, ScreenshotCard } from "@/components/ui/Media";
+import { AppShot, PhoneVideo, ScreenshotCard } from "@/components/ui/Media";
 import { ScrollCta, SignupCta } from "@/components/cta/SignupCta";
 import { HeroCopy } from "@/components/landing/HeroCopy";
 import { analytics } from "@/lib/analytics";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Reveal({
   children,
@@ -85,7 +84,7 @@ export function LandingPage({
                 />
                 <ScrollCta
                   label={campaign.secondaryCta.label}
-                  target={campaign.secondaryCta.scrollTarget ?? "#produto"}
+                  target={campaign.secondaryCta.scrollTarget ?? "#demonstracao"}
                   source="hero-secondary"
                   className="w-full sm:w-auto"
                 />
@@ -107,24 +106,25 @@ export function LandingPage({
                 className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.14),transparent_68%)]"
                 aria-hidden
               />
-              <div className="relative mx-auto grid max-w-md items-end gap-4 sm:max-w-none sm:grid-cols-[0.8fr_1.2fr] lg:max-w-none">
-                {publicShot ? (
-                  <PhoneMockup
-                    src={publicShot.media.src}
-                    alt={publicShot.media.alt}
+              <div className="relative space-y-3">
+                {desktopShot ? (
+                  <AppShot
+                    src={desktopShot.media.src}
+                    alt={desktopShot.media.alt}
                     priority
-                    className="sm:translate-y-2"
+                    aspectClassName="aspect-[16/10]"
+                    sizes="(max-width: 1024px) 100vw, 520px"
                   />
                 ) : null}
-                {desktopShot ? (
-                  <div className="relative hidden aspect-[3/2] overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[var(--shadow)] sm:block">
-                    <Image
-                      src={desktopShot.media.src}
-                      alt={desktopShot.media.alt}
-                      fill
+                {publicShot ? (
+                  <div className="mx-auto w-full max-w-sm sm:ml-auto sm:mr-0 sm:max-w-[70%]">
+                    <AppShot
+                      src={publicShot.media.src}
+                      alt={publicShot.media.alt}
                       priority
-                      className="object-cover object-top"
-                      sizes="(max-width: 1024px) 50vw, 460px"
+                      aspectClassName="aspect-[3/2]"
+                      sizes="(max-width: 768px) 90vw, 320px"
+                      className="ring-2 ring-white/10"
                     />
                   </div>
                 ) : null}
@@ -169,6 +169,10 @@ export function LandingPage({
         </Container>
       </Section>
 
+      {campaign.product.video ? (
+        <DemoVideoSection campaign={campaign} />
+      ) : null}
+
       <Section id="produto" ariaLabelledby="produto-title">
         <Container>
           <Reveal>
@@ -185,7 +189,10 @@ export function LandingPage({
           </Reveal>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {campaign.screenshots
-              .filter((s) => s.key !== "public-convocation")
+              .filter(
+                (s) =>
+                  s.key !== "public-convocation" && s.key !== "match-center",
+              )
               .map((shot, index) => (
                 <Reveal key={shot.key}>
                   <ScreenshotCard
@@ -289,12 +296,16 @@ export function LandingPage({
               </ol>
             </div>
             {publicShot ? (
-              <Reveal className="flex justify-center lg:justify-end">
-                <PhoneMockup
+              <Reveal className="lg:pl-2">
+                <AppShot
                   src={publicShot.media.src}
                   alt={publicShot.media.alt}
-                  className="w-[min(100%,260px)]"
+                  aspectClassName="aspect-[3/2]"
+                  sizes="(max-width: 1024px) 100vw, 420px"
                 />
+                <p className="mt-3 text-center text-sm text-[var(--muted)] lg:text-left">
+                  {publicShot.caption}
+                </p>
               </Reveal>
             ) : null}
           </div>
@@ -363,6 +374,64 @@ export function LandingPage({
         </Container>
       </Section>
     </>
+  );
+}
+
+function DemoVideoSection({ campaign }: { campaign: CampaignConfig }) {
+  const video = campaign.product.video!;
+  const [marks] = useState(() => new Set<number>());
+
+  useEffect(() => {
+    analytics.track("video_view", { campaign: campaign.slug });
+  }, [campaign.slug]);
+
+  return (
+    <Section
+      id="demonstracao"
+      ariaLabelledby="demonstracao-title"
+      className="bg-white"
+    >
+      <Container>
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
+          <Reveal>
+            <p className="eyebrow mb-3">{video.eyebrow}</p>
+            <h2
+              id="demonstracao-title"
+              className="max-w-xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
+            >
+              {video.title}
+            </h2>
+            <p className="mt-3 max-w-md text-pretty text-[var(--muted)]">
+              {video.description}
+            </p>
+          </Reveal>
+          <Reveal>
+            <PhoneVideo
+              src={video.src}
+              poster={video.poster}
+              title={video.title}
+              onPlay={() => analytics.track("video_start", { campaign: campaign.slug })}
+              onTimeUpdate={(e) => {
+                const el = e.currentTarget;
+                if (!el.duration) return;
+                const pct = (el.currentTime / el.duration) * 100;
+                for (const mark of [25, 50, 75] as const) {
+                  if (pct >= mark && !marks.has(mark)) {
+                    marks.add(mark);
+                    analytics.track(`video_${mark}` as "video_25", {
+                      campaign: campaign.slug,
+                    });
+                  }
+                }
+              }}
+              onEnded={() =>
+                analytics.track("video_complete", { campaign: campaign.slug })
+              }
+            />
+          </Reveal>
+        </div>
+      </Container>
+    </Section>
   );
 }
 

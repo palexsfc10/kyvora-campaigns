@@ -76,6 +76,15 @@ export const campaignConfigSchema = z.object({
     eyebrow: z.string(),
     title: z.string(),
     description: z.string(),
+    video: z
+      .object({
+        eyebrow: z.string(),
+        src: z.string(),
+        poster: z.string().optional(),
+        title: z.string(),
+        description: z.string(),
+      })
+      .optional(),
   }),
   benefits: z.object({
     eyebrow: z.string(),
