@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import type { CampaignConfig, Locale } from "@/campaigns/schema";
 import { localizePath } from "@/lib/i18n";
 import { siteConfig } from "@/config/site";
-import {
-  AnalyticsBootstrap,
-} from "@/components/analytics/AnalyticsBootstrap";
+import { AnalyticsBootstrap } from "@/components/analytics/AnalyticsBootstrap";
 import { CookieConsent } from "@/components/consent/CookieConsent";
 import {
+  DocumentLang,
   SiteFooter,
   SiteHeader,
   SkipLink,
@@ -93,7 +92,7 @@ export function CampaignShell({
       },
       {
         "@type": "FAQPage",
-        mainEntity: campaign.faq.map((item) => ({
+        mainEntity: campaign.faq.items.map((item) => ({
           "@type": "Question",
           name: item.question,
           acceptedAnswer: {
@@ -107,6 +106,7 @@ export function CampaignShell({
 
   return (
     <>
+      <DocumentLang locale={campaign.locale} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -116,7 +116,11 @@ export function CampaignShell({
       <main id="conteudo-principal">
         <LandingPage campaign={campaign} heroVariantId={heroVariantId} />
       </main>
-      <SiteFooter locale={campaign.locale} />
+      <SiteFooter
+        locale={campaign.locale}
+        path={path}
+        labels={campaign.labels}
+      />
       <StickyCta campaign={campaign} />
       <CookieConsent locale={campaign.locale} />
       <AnalyticsBootstrap

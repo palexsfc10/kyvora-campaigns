@@ -13,128 +13,127 @@ export const homeEn: CampaignConfig = {
   heroVariants: [
     {
       id: "A",
-      headline: "Run your team without spreadsheets and endless group chats.",
+      headline: "Your team organized on and off the pitch.",
       subheadline:
-        "Create the squad, send call-ups, and know who’s playing — in one place, on your phone.",
-      rationale: "Concrete pain + clarity for paid traffic message match.",
+        "Roster, matches, call-ups, and stats on your phone. Free 7-day trial.",
+      rationale: "Clear value prop + offer for cold paid traffic.",
     },
     {
       id: "B",
-      headline: "Organizing your team shouldn’t be harder than playing.",
+      headline: "Less chasing in the group chat. More clarity before kickoff.",
       subheadline:
-        "From roster to call-up: less chasing replies, more clarity before kickoff.",
-      rationale: "Emotional angle for captain/organizer creatives.",
+        "Send call-ups by link, track who’s confirmed, and show up prepared.",
+      rationale: "Relief angle for overloaded captain creatives.",
     },
     {
       id: "C",
-      headline: "Know who’s playing without chasing everyone for a reply.",
+      headline: "Know who’s playing without chasing everyone.",
       subheadline:
-        "Share a call-up link. Players confirm without creating an account.",
-      rationale: "Highlights the no-account confirmation differentiator.",
+        "Players reply via link — no account needed. You see status in one place.",
+      rationale: "No-account confirmation differentiator for attendance ads.",
     },
   ],
-  primaryCta: { label: "Create my team free", intent: "signup" },
+  primaryCta: { label: "Create free account", intent: "signup" },
   secondaryCta: {
-    label: "See Kyvora in action",
+    label: "See how it works",
     intent: "scroll",
-    scrollTarget: "#demonstracao",
+    scrollTarget: "#produto",
   },
-  trustPills: ["No card to start", "Works on mobile", "Players confirm without an account"],
+  trustPills: ["7-day free trial", "Players confirm without an account", "Mobile-ready"],
   identification: {
-    eyebrow: "The routine you already know",
-    title: "If organizing the team feels like a second job, this is for you.",
+    eyebrow: "The organizer’s routine",
+    title: "If team ops live in WhatsApp, this is for you.",
     description:
-      "It’s not a commitment problem. It’s missing one clear place for team ops — outside the chat flood.",
+      "It’s not a commitment problem. It’s missing one clear place for team operations.",
     scenes: [
-      { title: "Endless messages", description: "Polls, “who’s in?”, silence, then chasing again." },
-      { title: "Outdated spreadsheet", description: "Three versions. Nobody trusts the data." },
-      { title: "Last-minute lineup", description: "Notes on a phone, paper, or one person’s memory." },
-      { title: "Lost history", description: "Scores and attendance buried in old threads." },
+      {
+        title: "Confirmations buried in chat",
+        description: "Polls, silence, chasing again — and nobody knows who’s in.",
+      },
+      {
+        title: "Spreadsheets and scattered notes",
+        description: "Roster, dues, and scores in files nobody keeps current.",
+      },
+      {
+        title: "Last-minute lineups",
+        description: "Lists in one person’s head, on paper, or across three threads.",
+      },
+      {
+        title: "History that disappears",
+        description: "Goals, assists, and attendance lost in old messages.",
+      },
     ],
   },
-  beforeAfter: {
-    eyebrow: "The shift",
-    title: "Same match-week routine. Completely different clarity.",
-    beforeLabel: "Before",
-    afterLabel: "With Kyvora",
-    before: [
-      "Confirmations scattered across chats",
-      "Uncertainty until kickoff",
-      "Improvised lineups",
-      "Ops living in one organizer’s head",
-      "History lost in old conversations",
-    ],
-    after: [
-      "Call-ups with clear status",
-      "Confirmations in one place",
-      "Roster and matches centralized",
-      "Lineups organized on mobile",
-      "Team history you can actually find",
-    ],
-  },
-  demo: {
-    eyebrow: "Demo",
-    title: "From chaos to clarity in a few steps.",
-    description: "See the real flow: create a team, call up players, confirm attendance, run the match.",
-    video: {
-      poster: "/posters/demo-poster.svg",
-      title: "Kyvora in action",
-      description: "A short walkthrough of the team organization flow.",
-      placeholderLabel: "Video in production — coming soon",
-    },
-    flows: [
-      "Create team",
-      "Add players",
-      "Create match",
-      "Send call-up",
-      "Player confirms without an account",
-      "Set lineup",
-      "Follow Match Center",
-      "Check rankings",
-    ],
+  product: {
+    eyebrow: "The product",
+    title: "Real screens from the platform.",
+    description:
+      "From Match Center to the public call-up: what you see here is Kyvora in use.",
   },
   benefits: {
-    eyebrow: "What changes",
-    title: "Less chasing. A more organized team.",
-    description: "Fewer benefits. Clear outcomes — not a feature dump.",
+    eyebrow: "What Kyvora solves",
+    title: "Four pillars for match-week ops.",
+    description: "Fewer improvised tools. More control day to day.",
     items: [
       {
-        title: "Keep your roster organized.",
-        description: "Players, positions, and participation in one simple panel.",
+        title: "Sports management",
+        description: "Roster, squads, seasons, matches, and lineups in one flow.",
       },
       {
-        title: "Know who’s playing without chasing the group.",
-        description: "Share a link. Players confirm without signing up.",
+        title: "Call-ups and communication",
+        description: "Share a link, collect replies, and track who’s confirmed.",
       },
       {
-        title: "Set up the next match in minutes.",
-        description: "Date, venue, and opponent in one flow.",
+        title: "Stats and progress",
+        description: "Goals, assists, attendance, and rankings without manual sheets.",
       },
       {
-        title: "Log what happened in every game.",
-        description: "Score, events, and a clear match view.",
+        title: "Team finances",
+        description: "Dues, expenses, and a clear view of the team’s cash flow.",
+      },
+    ],
+  },
+  convocation: {
+    eyebrow: "Differentiator",
+    title: "Call-ups by link — no account for the player.",
+    description:
+      "You organize. The athlete just replies. Confirmations stay centralized.",
+    steps: [
+      {
+        title: "Create the call-up",
+        description: "Set the match and who should respond.",
       },
       {
-        title: "See who contributes on the pitch.",
-        description: "Rankings update as matches are recorded.",
+        title: "Share the link",
+        description: "Send it in the group or directly to the player.",
       },
       {
-        title: "Keep the team’s history.",
-        description: "Seasons and results stay available — not lost in chat.",
+        title: "The player replies",
+        description: "Confirms or declines without creating a Kyvora account.",
+      },
+      {
+        title: "You track it",
+        description: "Clear status on who’s in, out, or still pending.",
       },
     ],
   },
   howItWorks: {
     eyebrow: "How it works",
-    title: "Simple enough for match week.",
-    description: "Six steps. No install. No training the whole squad.",
+    title: "Three steps to get started.",
+    description: "No install. No training the whole squad.",
     steps: [
-      { title: "Create your team", description: "Set up in a few minutes." },
-      { title: "Add players", description: "Build a roster ready for call-ups." },
-      { title: "Organize the match", description: "Decide when and where you play." },
-      { title: "Send the call-up", description: "Share the link in your usual group." },
-      { title: "Track confirmations", description: "See who’s in, out, or pending." },
-      { title: "Show up prepared", description: "Clear lineup and ops before kickoff." },
+      {
+        title: "Create an account and set up the team",
+        description: "Build your team foundation in a few minutes.",
+      },
+      {
+        title: "Organize roster, matches, and finances",
+        description: "Centralize what today lives in chats and spreadsheets.",
+      },
+      {
+        title: "Share and follow along",
+        description: "Call-ups, confirmations, matches, and progress in one place.",
+      },
     ],
   },
   screenshots: [
@@ -179,105 +178,94 @@ export const homeEn: CampaignConfig = {
       caption: "Rankings without manual spreadsheets",
     },
   ],
-  proof: {
-    eyebrow: "Proof",
-    title: "Real product. Real flow. No invented numbers.",
-    description:
-      "Until customer stories scale, proof lives in the product — real screens and real team ops.",
-    items: [
-      { title: "Live product", description: "An active platform used in real team routines." },
-      { title: "Real screenshots", description: "Demo environment screens — not fake UI." },
-      { title: "Built for mobile", description: "Organize from the court, locker room, or commute." },
-      { title: "Transparency", description: "No fabricated testimonials. No made-up metrics." },
-    ],
-    testimonials: [],
-    logos: [],
-    metrics: [],
-  },
   offer: {
-    eyebrow: "Start now",
-    title: "Organize your team with low commitment.",
+    eyebrow: "Offer",
+    title: "Try Kyvora for 7 days.",
     description:
-      "Create an account, set up the team, and try the full flow. Final pricing appears only when commercial terms are configured.",
+      "Create an account, set up the team, and run the full flow. No card required to start.",
     trialDays: offerEnv.trialDays,
     requiresCard: offerEnv.requiresCard,
     priceBrl: offerEnv.priceBrl,
     priceUsd: offerEnv.priceUsd,
     highlights: [
-      "Team setup in minutes",
+      "7-day free trial",
       "Call-ups with no-account confirmation",
-      "History and rankings in one place",
+      "Sports and financial team management",
       "Cancel anytime",
     ],
-    ctaLabel: "Create my team free",
-    disclaimer: "Prices and commercial terms only appear when explicitly configured.",
+    ctaLabel: "Create free account",
+    disclaimer:
+      "Final prices and plans appear in the app when commercial terms are configured.",
   },
-  faq: [
-    {
-      id: "install",
-      question: "Do I need to install an app?",
-      answer: "No. Kyvora runs in the browser. You can also add it as a PWA.",
-    },
-    {
-      id: "mobile",
-      question: "Does it work on mobile?",
-      answer: "Yes. It’s designed for organizers away from a desk.",
-    },
-    {
-      id: "modalities",
-      question: "Does it work for football, futsal, and small-sided games?",
-      answer: "Yes — any recurring roster and match routine fits.",
-    },
-    {
-      id: "players-account",
-      question: "Do players need an account?",
-      answer: "Not to confirm attendance. They use the call-up link without signing up.",
-    },
-    {
-      id: "callup",
-      question: "How do call-ups work?",
-      answer: "Create a match, open the call-up, share the link. Responses stay centralized.",
-    },
-    {
-      id: "squads",
-      question: "Can I manage more than one squad?",
-      answer: "Yes. Organizations can run multiple squads/rosters.",
-    },
-    {
-      id: "trial",
-      question: "What happens after the trial?",
-      answer: "You choose whether to continue. Commercial terms are clear in the app.",
-    },
-    {
-      id: "card",
-      question: "Do I need a card to start?",
-      answer: "This campaign aims for low friction. If a card is required, it will be stated explicitly.",
-    },
-    {
-      id: "data",
-      question: "Is my data saved?",
-      answer: "Yes. Team history stays available while the account is active.",
-    },
-    {
-      id: "cancel",
-      question: "Can I cancel?",
-      answer: "Yes. Stop whenever you want.",
-    },
-    {
-      id: "pwa",
-      question: "Can I use it like an app?",
-      answer: "Yes. Add Kyvora to your home screen as a PWA.",
-    },
-  ],
+  faq: {
+    eyebrow: "FAQ",
+    title: "Before you create an account",
+    items: [
+      {
+        id: "install",
+        question: "Do I need to install anything?",
+        answer:
+          "No. Kyvora runs in the browser on phone or desktop. You can also add it to your home screen as a PWA.",
+      },
+      {
+        id: "players-account",
+        question: "Do players need an account?",
+        answer:
+          "Not to confirm attendance. You send the call-up link; they reply without signing up.",
+      },
+      {
+        id: "mobile",
+        question: "Can I use it on mobile?",
+        answer: "Yes. It’s designed for organizers away from a desk.",
+      },
+      {
+        id: "trial",
+        question: "What happens after the free trial?",
+        answer:
+          "You choose whether to continue. Commercial terms are clear in the app — no surprises on this page.",
+      },
+      {
+        id: "modalities",
+        question: "Does Kyvora work for football and futsal?",
+        answer:
+          "Yes. Any routine with roster, matches, and call-ups fits — including small-sided games.",
+      },
+      {
+        id: "squads",
+        question: "Can I register more than one squad?",
+        answer:
+          "Yes. The platform supports organizations with multiple squads and rosters.",
+      },
+      {
+        id: "data",
+        question: "Is my data saved?",
+        answer: "Yes. Team history stays available while the account is active.",
+      },
+    ],
+  },
+  labels: {
+    trial: "Trial",
+    card: "Card",
+    price: "Price",
+    cardRequired: "Required",
+    cardNotRequired: "Not required",
+    days: "days",
+    login: "Log in",
+    navProduct: "Product",
+    navBenefits: "Benefits",
+    navHow: "How it works",
+    navFaq: "FAQ",
+    accessApp: "Open the app",
+  },
   finalCta: {
-    title: "Your team already has enough challenges on the pitch.",
-    description: "Organize what happens off it — and show up with a clearer head.",
-    ctaLabel: "Create my team free",
+    title: "Ready to run the team properly?",
+    description: "Create your account and try Kyvora for 7 days.",
+    ctaLabel: "Create free account",
   },
   seo: {
-    title: "Kyvora — Organize your team without chat chaos",
+    title: "Kyvora — Organize your amateur team without chat chaos",
     description:
-      "Kyvora campaign landing: manage roster, call-ups, and matches. Create your team free and know who’s playing without chasing replies.",
+      "Amateur team management: roster, call-ups, matches, stats, and finances. Create a free account and try for 7 days.",
     ogImage: "/og/default.jpg",
     robots: "index,follow",
   },

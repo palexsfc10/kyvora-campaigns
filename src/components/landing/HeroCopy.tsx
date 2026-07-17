@@ -23,10 +23,10 @@ export function HeroCopy({
 
   return (
     <>
-      <h1 className="text-balance text-[1.85rem] font-extrabold leading-[1.12] tracking-tight text-[var(--ink)] sm:text-4xl lg:text-[3.15rem] lg:leading-[1.05]">
+      <h1 className="text-balance text-[1.7rem] font-extrabold leading-[1.15] tracking-tight text-[var(--ink)] sm:text-4xl lg:text-[2.85rem] lg:leading-[1.08]">
         {hero?.headline}
       </h1>
-      <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-[var(--muted)] sm:text-lg lg:mx-0">
+      <p className="mx-auto mt-3.5 max-w-xl text-pretty text-[0.95rem] leading-relaxed text-[var(--muted)] sm:mt-4 sm:text-lg lg:mx-0">
         {hero?.subheadline}
       </p>
     </>

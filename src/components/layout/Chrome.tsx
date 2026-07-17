@@ -1,11 +1,48 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import type { CampaignConfig } from "@/campaigns/schema";
 import { localizePath, uiCopy } from "@/lib/i18n";
 import { siteConfig } from "@/config/site";
 import { SignupCta } from "@/components/cta/SignupCta";
 import Link from "next/link";
+
+const LANGUAGE_OPTIONS = [
+  ["pt-BR", "PT"],
+  ["en", "EN"],
+  ["es", "ES"],
+] as const;
+
+function LanguageSwitcher({
+  locale,
+  path,
+  className = "",
+}: {
+  locale: CampaignConfig["locale"];
+  path: string;
+  className?: string;
+}) {
+  const copy = uiCopy[locale];
+  return (
+    <nav aria-label={copy.language} className={`flex items-center gap-1 ${className}`}>
+      {LANGUAGE_OPTIONS.map(([lang, label]) => (
+        <Link
+          key={lang}
+          href={localizePath(lang, path === "/" ? "/" : path)}
+          className={`rounded-full px-2.5 py-1 text-xs font-semibold transition ${
+            locale === lang
+              ? "bg-[var(--brand-soft)] text-[var(--brand)]"
+              : "text-[var(--muted)] hover:text-[var(--ink)]"
+          }`}
+          hrefLang={lang}
+          aria-current={locale === lang ? "page" : undefined}
+        >
+          {label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 
 export function SiteHeader({
   campaign,
@@ -15,39 +52,69 @@ export function SiteHeader({
   path: string;
 }) {
   const copy = uiCopy[campaign.locale];
+  const labels = campaign.labels;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuId = useId();
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  const navItems = [
+    { href: "#produto", label: labels.navProduct },
+    { href: "#beneficios", label: labels.navBenefits },
+    { href: "#como-funciona", label: labels.navHow },
+    { href: "#faq", label: labels.navFaq },
+  ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-white/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-white/90 backdrop-blur-md">
       <div className="container-page flex h-14 items-center justify-between gap-3 sm:h-16">
-        <Link
-          href={localizePath(campaign.locale, "/")}
-          className="text-lg font-extrabold tracking-tight text-[var(--ink)]"
-        >
-          Kyvora
-        </Link>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <nav aria-label={copy.language} className="hidden items-center gap-1 sm:flex">
-            {(
-              [
-                ["pt-BR", "PT"],
-                ["en", "EN"],
-                ["es", "ES"],
-              ] as const
-            ).map(([locale, label]) => (
-              <Link
-                key={locale}
-                href={localizePath(locale, path === "/" ? "/" : path)}
-                className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                  campaign.locale === locale
-                    ? "bg-[var(--brand-soft)] text-[var(--brand)]"
-                    : "text-[var(--muted)] hover:text-[var(--ink)]"
-                }`}
-                hrefLang={locale}
+        <div className="flex items-center gap-6">
+          <Link
+            href={localizePath(campaign.locale, "/")}
+            className="text-lg font-extrabold tracking-tight text-[var(--ink)]"
+          >
+            Kyvora
+          </Link>
+          <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="rounded-full px-3 py-1.5 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
               >
-                {label}
-              </Link>
+                {item.label}
+              </a>
             ))}
           </nav>
+        </div>
+
+        <div className="flex items-center gap-2 sm:gap-3">
+          <LanguageSwitcher
+            locale={campaign.locale}
+            path={path}
+            className="hidden sm:flex"
+          />
+          <a
+            href={siteConfig.appUrl}
+            className="hidden text-sm font-semibold text-[var(--muted)] transition hover:text-[var(--ink)] md:inline"
+            rel="noopener noreferrer"
+          >
+            {labels.login}
+          </a>
           <SignupCta
             label={campaign.primaryCta.label}
             destinationUrl={campaign.destinationUrl}
@@ -58,38 +125,115 @@ export function SiteHeader({
             size="md"
             className="!min-h-10 !px-4 !text-sm"
           />
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--ink)] lg:hidden"
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            aria-label={menuOpen ? copy.closeMenu : copy.openMenu}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span className="sr-only">{menuOpen ? copy.closeMenu : copy.openMenu}</span>
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              {menuOpen ? (
+                <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
+              )}
+            </svg>
+          </button>
         </div>
       </div>
+
+      {menuOpen ? (
+        <div
+          id={menuId}
+          className="border-t border-[var(--border)] bg-white lg:hidden"
+        >
+          <nav aria-label="Mobile" className="container-page flex flex-col gap-1 py-4">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="rounded-xl px-3 py-3 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--bg-soft)]"
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+            <a
+              href={siteConfig.appUrl}
+              className="rounded-xl px-3 py-3 text-sm font-semibold text-[var(--muted)] hover:bg-[var(--bg-soft)] hover:text-[var(--ink)]"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              {labels.login}
+            </a>
+            <div className="mt-2 border-t border-[var(--border)] pt-3">
+              <LanguageSwitcher locale={campaign.locale} path={path} />
+            </div>
+          </nav>
+        </div>
+      ) : null}
     </header>
   );
 }
 
-export function SiteFooter({ locale }: { locale: CampaignConfig["locale"] }) {
+export function SiteFooter({
+  locale,
+  path,
+  labels,
+}: {
+  locale: CampaignConfig["locale"];
+  path: string;
+  labels: CampaignConfig["labels"];
+}) {
   const copy = uiCopy[locale];
   return (
-    <footer className="border-t border-[var(--border)] bg-white py-8">
-      <div className="container-page flex flex-col gap-3 text-sm text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
-        <p>
-          © {siteConfig.year} {siteConfig.company} · Kyvora
-        </p>
-        <div className="flex gap-4">
-          <a
-            href={`${siteConfig.institutionalUrl}${siteConfig.privacyPath}`}
-            className="hover:text-[var(--ink)]"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {copy.privacy}
-          </a>
-          <a
-            href={`${siteConfig.institutionalUrl}${siteConfig.termsPath}`}
-            className="hover:text-[var(--ink)]"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {copy.terms}
-          </a>
+    <footer className="border-t border-[var(--border)] bg-white py-10">
+      <div className="container-page flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-base font-extrabold text-[var(--ink)]">Kyvora</p>
+            <p className="mt-1 text-sm text-[var(--muted)]">
+              © {siteConfig.year} {siteConfig.company}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <a
+              href={siteConfig.appUrl}
+              className="font-medium text-[var(--muted)] hover:text-[var(--ink)]"
+              rel="noopener noreferrer"
+            >
+              {labels.accessApp}
+            </a>
+            <a
+              href={`${siteConfig.institutionalUrl}${siteConfig.privacyPath}`}
+              className="font-medium text-[var(--muted)] hover:text-[var(--ink)]"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {copy.privacy}
+            </a>
+            <a
+              href={`${siteConfig.institutionalUrl}${siteConfig.termsPath}`}
+              className="font-medium text-[var(--muted)] hover:text-[var(--ink)]"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {copy.terms}
+            </a>
+            <a
+              href={siteConfig.institutionalUrl}
+              className="font-medium text-[var(--muted)] hover:text-[var(--ink)]"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {copy.contact}
+            </a>
+          </div>
         </div>
+        <LanguageSwitcher locale={locale} path={path} />
       </div>
     </footer>
   );
@@ -100,7 +244,7 @@ export function StickyCta({ campaign }: { campaign: CampaignConfig }) {
   const copy = uiCopy[campaign.locale];
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 420);
+    const onScroll = () => setVisible(window.scrollY > 480);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -138,4 +282,12 @@ export function SkipLink({ locale }: { locale: CampaignConfig["locale"] }) {
       {uiCopy[locale].skipToContent}
     </a>
   );
+}
+
+/** Sets <html lang> after hydration for localized routes. */
+export function DocumentLang({ locale }: { locale: string }) {
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+  return null;
 }

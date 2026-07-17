@@ -7,7 +7,7 @@ import { PhoneMockup, ScreenshotCard } from "@/components/ui/Media";
 import { ScrollCta, SignupCta } from "@/components/cta/SignupCta";
 import { HeroCopy } from "@/components/landing/HeroCopy";
 import { analytics } from "@/lib/analytics";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 function Reveal({
   children,
@@ -18,6 +18,37 @@ function Reveal({
 }) {
   return <div className={`reveal ${className}`}>{children}</div>;
 }
+
+const BENEFIT_ICONS = [
+  // Sports
+  <path
+    key="sports"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M12 3v3m0 12v3M3 12h3m12 0h3M6.3 6.3l2.1 2.1m7.2 7.2 2.1 2.1m0-11.4-2.1 2.1M8.4 15.6l-2.1 2.1"
+  />,
+  // Call-up / link
+  <path
+    key="link"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M13.5 6.5a3.5 3.5 0 0 1 5 5l-2 2a3.5 3.5 0 0 1-5-5m-1 5a3.5 3.5 0 0 1-5-5l2-2a3.5 3.5 0 0 1 5 5"
+  />,
+  // Stats
+  <path
+    key="stats"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M4 19V9m5 10V5m5 14v-7m5 7V8"
+  />,
+  // Finance
+  <path
+    key="finance"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M12 3v18m-6-4.5c0 1.5 2.7 2.5 6 2.5s6-1 6-2.5S15.3 14 12 14s-6-1-6-2.5S8.7 9 12 9s6 1 6 2.5"
+  />,
+];
 
 export function LandingPage({
   campaign,
@@ -36,13 +67,13 @@ export function LandingPage({
 
   return (
     <>
-      <Section className="relative overflow-hidden pb-10 pt-10 sm:pt-14 lg:pb-16 lg:pt-16">
+      <Section className="relative overflow-hidden pb-8 pt-8 sm:pb-12 sm:pt-12 lg:pb-16 lg:pt-14">
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+          <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
             <div className="reveal text-center lg:text-left">
-              <p className="eyebrow mb-4 justify-center lg:justify-start">Kyvora</p>
+              <p className="eyebrow mb-3 justify-center lg:justify-start">Kyvora</p>
               <HeroCopy campaign={campaign} heroVariantId={heroVariantId} />
-              <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center lg:justify-start">
+              <div className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center lg:justify-start">
                 <SignupCta
                   label={campaign.primaryCta.label}
                   destinationUrl={campaign.destinationUrl}
@@ -54,45 +85,46 @@ export function LandingPage({
                 />
                 <ScrollCta
                   label={campaign.secondaryCta.label}
-                  target={campaign.secondaryCta.scrollTarget ?? "#demonstracao"}
+                  target={campaign.secondaryCta.scrollTarget ?? "#produto"}
                   source="hero-secondary"
                   className="w-full sm:w-auto"
                 />
               </div>
-              <div className="mt-6 flex flex-wrap justify-center gap-2 lg:justify-start">
+              <ul className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
                 {campaign.trustPills.map((pill) => (
-                  <span
+                  <li
                     key={pill}
-                    className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[var(--muted)] shadow-sm ring-1 ring-[var(--border)]"
+                    className="rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-[var(--muted)] ring-1 ring-[var(--border)]"
                   >
                     {pill}
-                  </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
 
             <Reveal className="relative">
               <div
-                className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.18),transparent_65%)]"
+                className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.14),transparent_68%)]"
                 aria-hidden
               />
-              <div className="relative grid items-end gap-4 sm:grid-cols-[0.85fr_1.15fr]">
+              <div className="relative mx-auto grid max-w-md items-end gap-4 sm:max-w-none sm:grid-cols-[0.8fr_1.2fr] lg:max-w-none">
                 {publicShot ? (
                   <PhoneMockup
                     src={publicShot.media.src}
                     alt={publicShot.media.alt}
                     priority
+                    className="sm:translate-y-2"
                   />
                 ) : null}
                 {desktopShot ? (
-                  <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] border border-[var(--border)] bg-white shadow-[var(--shadow)]">
+                  <div className="relative hidden aspect-[3/2] overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[var(--shadow)] sm:block">
                     <Image
                       src={desktopShot.media.src}
                       alt={desktopShot.media.alt}
                       fill
                       priority
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 480px"
+                      className="object-cover object-top"
+                      sizes="(max-width: 1024px) 50vw, 460px"
                     />
                   </div>
                 ) : null}
@@ -105,160 +137,51 @@ export function LandingPage({
       <Section
         id="identificacao"
         ariaLabelledby="identificacao-title"
-        className="bg-[var(--bg-soft)]/60"
+        className="bg-[var(--bg-soft)]/50"
       >
         <Container>
           <Reveal>
             <p className="eyebrow mb-3">{campaign.identification.eyebrow}</p>
             <h2
               id="identificacao-title"
-              className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
+              className="max-w-2xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
             >
               {campaign.identification.title}
             </h2>
-            <p className="mt-3 max-w-2xl text-[var(--muted)]">
+            <p className="mt-3 max-w-xl text-pretty text-[var(--muted)]">
               {campaign.identification.description}
             </p>
           </Reveal>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
             {campaign.identification.scenes.map((scene) => (
-              <Reveal key={scene.title}>
-                <article className="rounded-[var(--radius)] border border-[var(--border)] bg-white p-5 shadow-sm">
-                  <h3 className="text-base font-bold">{scene.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-                    {scene.description}
-                  </p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Section id="antes-depois" ariaLabelledby="antes-depois-title">
-        <Container>
-          <Reveal>
-            <p className="eyebrow mb-3">{campaign.beforeAfter.eyebrow}</p>
-            <h2
-              id="antes-depois-title"
-              className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
-            >
-              {campaign.beforeAfter.title}
-            </h2>
-          </Reveal>
-          <div className="mt-8 grid gap-4 lg:grid-cols-2">
-            <Reveal>
-              <div className="h-full rounded-[var(--radius)] border border-[var(--border)] bg-white p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">
-                  {campaign.beforeAfter.beforeLabel}
-                </p>
-                <ul className="mt-4 space-y-3">
-                  {campaign.beforeAfter.before.map((item) => (
-                    <li key={item} className="flex gap-3 text-sm text-[var(--ink)]">
-                      <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-rose-400" aria-hidden />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div className="h-full rounded-[var(--radius)] border border-indigo-200 bg-[linear-gradient(180deg,#ffffff,var(--brand-soft))] p-6 shadow-[var(--shadow)]">
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--brand)]">
-                  {campaign.beforeAfter.afterLabel}
-                </p>
-                <ul className="mt-4 space-y-3">
-                  {campaign.beforeAfter.after.map((item) => (
-                    <li key={item} className="flex gap-3 text-sm font-medium text-[var(--ink)]">
-                      <span
-                        className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[var(--success)]"
-                        aria-hidden
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
-
-      <DemoSection campaign={campaign} />
-
-      <Section id="beneficios" ariaLabelledby="beneficios-title" className="bg-white">
-        <Container>
-          <Reveal>
-            <p className="eyebrow mb-3">{campaign.benefits.eyebrow}</p>
-            <h2
-              id="beneficios-title"
-              className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
-            >
-              {campaign.benefits.title}
-            </h2>
-            <p className="mt-3 max-w-2xl text-[var(--muted)]">{campaign.benefits.description}</p>
-          </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {campaign.benefits.items.map((item) => (
-              <Reveal key={item.title}>
-                <article className="h-full rounded-[var(--radius)] border border-[var(--border)] bg-[var(--bg)] p-5">
-                  <h3 className="text-base font-bold leading-snug">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-                    {item.description}
-                  </p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Section id="como-funciona" ariaLabelledby="como-funciona-title">
-        <Container>
-          <Reveal>
-            <p className="eyebrow mb-3">{campaign.howItWorks.eyebrow}</p>
-            <h2
-              id="como-funciona-title"
-              className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
-            >
-              {campaign.howItWorks.title}
-            </h2>
-            <p className="mt-3 max-w-2xl text-[var(--muted)]">
-              {campaign.howItWorks.description}
-            </p>
-          </Reveal>
-          <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {campaign.howItWorks.steps.map((step, index) => (
-              <li key={step.title}>
+              <li key={scene.title}>
                 <Reveal>
-                  <div className="h-full rounded-[var(--radius)] border border-[var(--border)] bg-white p-5">
-                    <span className="text-xs font-bold text-[var(--brand)]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="mt-2 text-base font-bold">{step.title}</h3>
-                    <p className="mt-2 text-sm text-[var(--muted)]">{step.description}</p>
-                  </div>
+                  <article className="h-full border-l-2 border-[var(--brand)]/35 bg-white/70 py-4 pl-4 pr-3 sm:pl-5">
+                    <h3 className="text-base font-bold">{scene.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-[var(--muted)]">
+                      {scene.description}
+                    </p>
+                  </article>
                 </Reveal>
               </li>
             ))}
-          </ol>
+          </ul>
         </Container>
       </Section>
 
-      <Section id="telas" ariaLabelledby="telas-title" className="bg-[var(--bg-soft)]/50">
+      <Section id="produto" ariaLabelledby="produto-title">
         <Container>
           <Reveal>
-            <p className="eyebrow mb-3">Produto</p>
+            <p className="eyebrow mb-3">{campaign.product.eyebrow}</p>
             <h2
-              id="telas-title"
-              className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
+              id="produto-title"
+              className="max-w-2xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
             >
-              {campaign.locale === "en"
-                ? "Real screens. No fiction."
-                : campaign.locale === "es"
-                  ? "Pantallas reales. Sin ficción."
-                  : "Telas reais. Sem fantasia."}
+              {campaign.product.title}
             </h2>
+            <p className="mt-3 max-w-xl text-pretty text-[var(--muted)]">
+              {campaign.product.description}
+            </p>
           </Reveal>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {campaign.screenshots
@@ -270,6 +193,7 @@ export function LandingPage({
                     alt={shot.media.alt}
                     caption={shot.caption}
                     priority={index === 0}
+                    loading={index === 0 ? "eager" : "lazy"}
                   />
                 </Reveal>
               ))}
@@ -277,56 +201,154 @@ export function LandingPage({
         </Container>
       </Section>
 
-      <Section id="prova" ariaLabelledby="prova-title">
+      <Section
+        id="beneficios"
+        ariaLabelledby="beneficios-title"
+        className="bg-white"
+      >
         <Container>
           <Reveal>
-            <p className="eyebrow mb-3">{campaign.proof.eyebrow}</p>
+            <p className="eyebrow mb-3">{campaign.benefits.eyebrow}</p>
             <h2
-              id="prova-title"
-              className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
+              id="beneficios-title"
+              className="max-w-2xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
             >
-              {campaign.proof.title}
+              {campaign.benefits.title}
             </h2>
-            <p className="mt-3 max-w-2xl text-[var(--muted)]">{campaign.proof.description}</p>
+            <p className="mt-3 max-w-xl text-pretty text-[var(--muted)]">
+              {campaign.benefits.description}
+            </p>
           </Reveal>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-            {campaign.proof.items.map((item) => (
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {campaign.benefits.items.map((item, index) => (
               <Reveal key={item.title}>
-                <article className="rounded-[var(--radius)] border border-[var(--border)] bg-white p-5">
-                  <h3 className="font-bold">{item.title}</h3>
-                  <p className="mt-2 text-sm text-[var(--muted)]">{item.description}</p>
+                <article className="h-full rounded-2xl border border-[var(--border)] bg-[var(--bg)]/80 p-5 sm:p-6">
+                  <span
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-soft)] text-[var(--brand)]"
+                    aria-hidden
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                    >
+                      {BENEFIT_ICONS[index] ?? BENEFIT_ICONS[0]}
+                    </svg>
+                  </span>
+                  <h3 className="mt-4 text-base font-bold leading-snug">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                    {item.description}
+                  </p>
                 </article>
               </Reveal>
             ))}
           </div>
-          {campaign.proof.testimonials.length === 0 &&
-          campaign.proof.metrics.length === 0 &&
-          campaign.proof.logos.length === 0 ? (
-            <p className="mt-6 text-sm text-[var(--muted)]">
-              {campaign.locale === "en"
-                ? "Slot ready for real testimonials, logos, and metrics — nothing invented."
-                : campaign.locale === "es"
-                  ? "Espacio listo para testimonios, logos y métricas reales — sin inventar nada."
-                  : "Espaço preparado para depoimentos, logos e métricas reais — ainda sem conteúdo inventado."}
+        </Container>
+      </Section>
+
+      <Section
+        id="convocacao"
+        ariaLabelledby="convocacao-title"
+        className="bg-[var(--bg-soft)]/40"
+      >
+        <Container>
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.85fr] lg:gap-14">
+            <div>
+              <Reveal>
+                <p className="eyebrow mb-3">{campaign.convocation.eyebrow}</p>
+                <h2
+                  id="convocacao-title"
+                  className="max-w-xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
+                >
+                  {campaign.convocation.title}
+                </h2>
+                <p className="mt-3 max-w-lg text-pretty text-[var(--muted)]">
+                  {campaign.convocation.description}
+                </p>
+              </Reveal>
+              <ol className="mt-8 space-y-4">
+                {campaign.convocation.steps.map((step, index) => (
+                  <li key={step.title}>
+                    <Reveal>
+                      <div className="flex gap-4">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--brand)] text-xs font-bold text-white">
+                          {index + 1}
+                        </span>
+                        <div>
+                          <h3 className="text-base font-bold">{step.title}</h3>
+                          <p className="mt-1 text-sm text-[var(--muted)]">
+                            {step.description}
+                          </p>
+                        </div>
+                      </div>
+                    </Reveal>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            {publicShot ? (
+              <Reveal className="flex justify-center lg:justify-end">
+                <PhoneMockup
+                  src={publicShot.media.src}
+                  alt={publicShot.media.alt}
+                  className="w-[min(100%,260px)]"
+                />
+              </Reveal>
+            ) : null}
+          </div>
+        </Container>
+      </Section>
+
+      <Section id="como-funciona" ariaLabelledby="como-funciona-title">
+        <Container>
+          <Reveal>
+            <p className="eyebrow mb-3">{campaign.howItWorks.eyebrow}</p>
+            <h2
+              id="como-funciona-title"
+              className="max-w-2xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
+            >
+              {campaign.howItWorks.title}
+            </h2>
+            <p className="mt-3 max-w-xl text-pretty text-[var(--muted)]">
+              {campaign.howItWorks.description}
             </p>
-          ) : null}
+          </Reveal>
+          <ol className="mt-8 grid gap-4 md:grid-cols-3">
+            {campaign.howItWorks.steps.map((step, index) => (
+              <li key={step.title}>
+                <Reveal>
+                  <div className="relative h-full border-t-2 border-[var(--brand)] pt-5">
+                    <span className="text-xs font-bold tracking-wide text-[var(--brand)]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="mt-2 text-base font-bold">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+                      {step.description}
+                    </p>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
         </Container>
       </Section>
 
       <OfferSection campaign={campaign} />
       <FaqSection campaign={campaign} />
 
-      <Section id="cta-final" className="pb-24 md:pb-16">
+      <Section id="cta-final" className="pb-24 pt-4 md:pb-16">
         <Container>
           <Reveal>
-            <div className="overflow-hidden rounded-[1.75rem] bg-[linear-gradient(135deg,#312e81,#4f46e5_45%,#6366f1)] px-6 py-10 text-white shadow-[var(--shadow)] sm:px-10 sm:py-14">
-              <h2 className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-4xl">
+            <div className="rounded-3xl border border-[var(--border)] bg-white px-6 py-10 text-center shadow-[var(--shadow)] sm:px-10 sm:py-12">
+              <h2 className="mx-auto max-w-2xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl">
                 {campaign.finalCta.title}
               </h2>
-              <p className="mt-4 max-w-2xl text-base text-indigo-100 sm:text-lg">
+              <p className="mx-auto mt-3 max-w-md text-[var(--muted)]">
                 {campaign.finalCta.description}
               </p>
-              <div className="mt-8">
+              <div className="mt-7 flex justify-center">
                 <SignupCta
                   label={campaign.finalCta.ctaLabel}
                   destinationUrl={campaign.destinationUrl}
@@ -334,7 +356,6 @@ export function LandingPage({
                   locale={campaign.locale}
                   source="final"
                   experimentVariant={campaign.experiment?.variant}
-                  className="!bg-white !text-[var(--brand)] hover:!bg-indigo-50"
                 />
               </div>
             </div>
@@ -345,99 +366,9 @@ export function LandingPage({
   );
 }
 
-function DemoSection({ campaign }: { campaign: CampaignConfig }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [marks] = useState(() => new Set<number>());
-
-  useEffect(() => {
-    analytics.track("video_view", { campaign: campaign.slug });
-  }, [campaign.slug]);
-
-  return (
-    <Section id="demonstracao" ariaLabelledby="demonstracao-title" className="bg-white">
-      <Container>
-        <Reveal>
-          <p className="eyebrow mb-3">{campaign.demo.eyebrow}</p>
-          <h2
-            id="demonstracao-title"
-            className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
-          >
-            {campaign.demo.title}
-          </h2>
-          <p className="mt-3 max-w-2xl text-[var(--muted)]">{campaign.demo.description}</p>
-        </Reveal>
-
-        <Reveal className="mt-8">
-          <div className="overflow-hidden rounded-[1.5rem] border border-[var(--border)] bg-[#0f172a] shadow-[var(--shadow)]">
-            {campaign.demo.video.src ? (
-              <video
-                ref={videoRef}
-                className="aspect-video w-full"
-                controls
-                playsInline
-                preload="none"
-                poster={campaign.demo.video.poster}
-                title={campaign.demo.video.title}
-                onPlay={() => analytics.track("video_start", { campaign: campaign.slug })}
-                onTimeUpdate={(e) => {
-                  const video = e.currentTarget;
-                  if (!video.duration) return;
-                  const pct = (video.currentTime / video.duration) * 100;
-                  for (const mark of [25, 50, 75] as const) {
-                    if (pct >= mark && !marks.has(mark)) {
-                      marks.add(mark);
-                      analytics.track(`video_${mark}` as "video_25", {
-                        campaign: campaign.slug,
-                      });
-                    }
-                  }
-                }}
-                onEnded={() =>
-                  analytics.track("video_complete", { campaign: campaign.slug })
-                }
-              >
-                <source src={campaign.demo.video.src} />
-                {campaign.demo.video.captions ? (
-                  <track kind="captions" src={campaign.demo.video.captions} />
-                ) : null}
-              </video>
-            ) : (
-              <div className="relative aspect-video">
-                <Image
-                  src={campaign.demo.video.poster}
-                  alt={campaign.demo.video.title}
-                  fill
-                  className="object-cover opacity-80"
-                  sizes="100vw"
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-slate-950/55 px-6 text-center">
-                  <p className="text-lg font-bold text-white">{campaign.demo.video.title}</p>
-                  <p className="max-w-md text-sm text-indigo-100">
-                    {campaign.demo.video.placeholderLabel}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </Reveal>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          {campaign.demo.flows.map((flow) => (
-            <span
-              key={flow}
-              className="rounded-full bg-[var(--bg-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--brand)]"
-            >
-              {flow}
-            </span>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
-}
-
 function OfferSection({ campaign }: { campaign: CampaignConfig }) {
   const ref = useRef<HTMLDivElement | null>(null);
+  const labels = campaign.labels;
 
   useEffect(() => {
     const node = ref.current;
@@ -468,14 +399,16 @@ function OfferSection({ campaign }: { campaign: CampaignConfig }) {
             <p className="eyebrow mb-3">{campaign.offer.eyebrow}</p>
             <h2
               id="oferta-title"
-              className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
+              className="max-w-2xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
             >
               {campaign.offer.title}
             </h2>
-            <p className="mt-3 max-w-2xl text-[var(--muted)]">{campaign.offer.description}</p>
+            <p className="mt-3 max-w-xl text-pretty text-[var(--muted)]">
+              {campaign.offer.description}
+            </p>
           </Reveal>
           <Reveal className="mt-8">
-            <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--bg)] p-6 sm:p-8">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-6 sm:p-8">
               <ul className="grid gap-3 sm:grid-cols-2">
                 {campaign.offer.highlights.map((item) => (
                   <li key={item} className="flex gap-2 text-sm font-medium">
@@ -491,52 +424,31 @@ function OfferSection({ campaign }: { campaign: CampaignConfig }) {
                 priceBits.length > 0) && (
                 <dl className="mt-6 grid gap-3 sm:grid-cols-3">
                   {campaign.offer.trialDays ? (
-                    <div className="rounded-2xl bg-white p-4 ring-1 ring-[var(--border)]">
+                    <div className="rounded-xl bg-white p-4 ring-1 ring-[var(--border)]">
                       <dt className="text-xs uppercase tracking-wide text-[var(--muted)]">
-                        Trial
+                        {labels.trial}
                       </dt>
                       <dd className="mt-1 text-lg font-bold">
-                        {campaign.offer.trialDays}{" "}
-                        {campaign.locale === "en"
-                          ? "days"
-                          : campaign.locale === "es"
-                            ? "días"
-                            : "dias"}
+                        {campaign.offer.trialDays} {labels.days}
                       </dd>
                     </div>
                   ) : null}
                   {campaign.offer.requiresCard !== null ? (
-                    <div className="rounded-2xl bg-white p-4 ring-1 ring-[var(--border)]">
+                    <div className="rounded-xl bg-white p-4 ring-1 ring-[var(--border)]">
                       <dt className="text-xs uppercase tracking-wide text-[var(--muted)]">
-                        {campaign.locale === "en"
-                          ? "Card"
-                          : campaign.locale === "es"
-                            ? "Tarjeta"
-                            : "Cartão"}
+                        {labels.card}
                       </dt>
                       <dd className="mt-1 text-lg font-bold">
                         {campaign.offer.requiresCard
-                          ? campaign.locale === "en"
-                            ? "Required"
-                            : campaign.locale === "es"
-                              ? "Necesaria"
-                              : "Necessário"
-                          : campaign.locale === "en"
-                            ? "Not required"
-                            : campaign.locale === "es"
-                              ? "No necesaria"
-                              : "Não necessário"}
+                          ? labels.cardRequired
+                          : labels.cardNotRequired}
                       </dd>
                     </div>
                   ) : null}
                   {priceBits.length > 0 ? (
-                    <div className="rounded-2xl bg-white p-4 ring-1 ring-[var(--border)]">
+                    <div className="rounded-xl bg-white p-4 ring-1 ring-[var(--border)]">
                       <dt className="text-xs uppercase tracking-wide text-[var(--muted)]">
-                        {campaign.locale === "en"
-                          ? "Price"
-                          : campaign.locale === "es"
-                            ? "Precio"
-                            : "Preço"}
+                        {labels.price}
                       </dt>
                       <dd className="mt-1 text-lg font-bold">{priceBits.join(" · ")}</dd>
                     </div>
@@ -564,26 +476,22 @@ function OfferSection({ campaign }: { campaign: CampaignConfig }) {
 
 function FaqSection({ campaign }: { campaign: CampaignConfig }) {
   return (
-    <Section id="faq" ariaLabelledby="faq-title" className="bg-[var(--bg-soft)]/40">
+    <Section id="faq" ariaLabelledby="faq-title" className="bg-[var(--bg-soft)]/35">
       <Container>
         <Reveal>
-          <p className="eyebrow mb-3">FAQ</p>
+          <p className="eyebrow mb-3">{campaign.faq.eyebrow}</p>
           <h2
             id="faq-title"
-            className="max-w-3xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
+            className="max-w-2xl text-balance text-2xl font-extrabold tracking-tight sm:text-3xl"
           >
-            {campaign.locale === "en"
-              ? "Questions people ask before creating an account"
-              : campaign.locale === "es"
-                ? "Preguntas antes de crear la cuenta"
-                : "Perguntas que aparecem antes de criar a conta"}
+            {campaign.faq.title}
           </h2>
         </Reveal>
-        <div className="mt-8 space-y-3">
-          {campaign.faq.map((item) => (
+        <div className="mt-8 space-y-2">
+          {campaign.faq.items.map((item) => (
             <details
               key={item.id}
-              className="group rounded-[var(--radius)] border border-[var(--border)] bg-white px-5 py-4"
+              className="group rounded-2xl border border-[var(--border)] bg-white px-5 py-4"
               onToggle={(e) => {
                 if ((e.target as HTMLDetailsElement).open) {
                   analytics.track("faq_open", {
@@ -596,7 +504,10 @@ function FaqSection({ campaign }: { campaign: CampaignConfig }) {
               <summary className="cursor-pointer list-none text-sm font-bold marker:content-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]">
                 <span className="flex items-center justify-between gap-3">
                   {item.question}
-                  <span className="text-[var(--brand)] transition group-open:rotate-45" aria-hidden>
+                  <span
+                    className="text-lg leading-none text-[var(--brand)] transition group-open:rotate-45"
+                    aria-hidden
+                  >
                     +
                   </span>
                 </span>
